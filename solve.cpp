@@ -4,6 +4,7 @@
 #include<fstream>
 #include<cstdlib>
 #include<memory>
+#include<cstring>
 using namespace std;
 #define MAX 3
 
@@ -97,7 +98,6 @@ string get_label(int mat[MAX][MAX])
     re+="\n";
     }
     return re;
-    
 }
 
 void write_header(std::ofstream &dotfile)
@@ -225,17 +225,17 @@ int count_inversion(int initial[MAX][MAX])
 int main()
 {
     // valid puzzles
-    // int initial[MAX][MAX] ={{1,3,2},
-    //                         {5,8,7},
-    //                         {6,0,4}};
+    int initial[MAX][MAX] ={{1,3,2},
+                            {5,8,7},
+                            {6,0,4}};
 
     // int initial[MAX][MAX] ={{1,2,3},
     //                         {4,0,5},
     //                         {7,8,6}};
 
-    int initial[MAX][MAX] ={{1,3,0},
-                            {4,2,6},
-                            {7,5,8}};         
+    // int initial[MAX][MAX] ={{1,3,0},
+    //                         {4,2,6},
+    //                         {7,5,8}};         
 
     // int initial[MAX][MAX] ={{1,2,3},
     //                         {4,5,6},
@@ -256,7 +256,7 @@ int main()
 
     int cx,cy,dl;
     // starting position of 0 and depth limit
-    cx=0;cy=2;dl=50;
+    cx=2;cy=1;dl=50;
     
     int inversion_count = count_inversion(initial);
     if(inversion_count%2==0)
