@@ -11,7 +11,7 @@ using namespace std;
 struct TreeNode
 {
     int mat[MAX][MAX];
-    int x,y,depth;
+    int x,y,px,py,depth;
     shared_ptr<TreeNode> left;
     shared_ptr<TreeNode> right;
     shared_ptr<TreeNode> top;
@@ -23,6 +23,8 @@ shared_ptr<TreeNode> newnode(int mat[MAX][MAX],int x,int y,int nx,int ny,int dep
 {
     auto t = make_shared<TreeNode>();
     memcpy(t->mat,mat,MAX*MAX*sizeof(mat[0][0]));
+    t->px = x;
+    t->py = y;
     swap(t->mat[x][y], t->mat[nx][ny]);
     t->x = nx;
     t->y = ny;
@@ -73,7 +75,7 @@ bool is_valid_move(int movex,int movey)
 
 void expand_left(shared_ptr<TreeNode>& root)
 {
-    if(is_valid_move(root->x-1,root->y))
+    if((is_valid_move(root->x-1,root->y)) && (root->x-1!=root->px))
     { 
         shared_ptr<TreeNode> t = newnode(root->mat,root->x,root->y,root->x-1,root->y,root->depth+1);
         root->left = t;
@@ -83,7 +85,7 @@ return;
 
 void expand_right(shared_ptr<TreeNode>& root)
 {
-    if(is_valid_move(root->x+1,root->y))
+    if((is_valid_move(root->x+1,root->y)) && (root->x+1!=root->px))
     { 
         shared_ptr<TreeNode> t = newnode(root->mat,root->x,root->y,root->x+1,root->y,root->depth+1);
         root->right = t;
@@ -93,7 +95,7 @@ return;
 
 void expand_top(shared_ptr<TreeNode>& root)
 {
-    if(is_valid_move(root->x,root->y+1))
+    if((is_valid_move(root->x,root->y+1)) && (root->y+1!=root->py))
     { 
         shared_ptr<TreeNode> t = newnode(root->mat,root->x,root->y,root->x,root->y+1,root->depth+1);
         root->top = t;
@@ -103,7 +105,7 @@ return;
 
 void expand_bottom(shared_ptr<TreeNode>& root)
 {
-    if(is_valid_move(root->x,root->y-1))
+    if((is_valid_move(root->x,root->y-1)) && (root->y-1!=root->py))
     { 
         shared_ptr<TreeNode> t = newnode(root->mat,root->x,root->y,root->x,root->y-1,root->depth+1);
         root->bottom = t;
