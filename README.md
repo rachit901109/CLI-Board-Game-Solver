@@ -17,4 +17,5 @@ g++ -g game_tree.cpp -o game_tree.exe
 ```
 Game Tree for Depth 5:
 
-![Screenshot 2023-08-11 011937](https://github.com/rachit901109/Eight-puzzle-problem/assets/110279690/cd33f656-f1e3-4d8c-a3c5-f9c080ffac77)
+![Screenshot 2023-08-11 185529](https://github.com/rachit901109/Eight-puzzle-problem/assets/110279690/8d12c5f1-4fa8-4a93-8790-e7d8326a026b)
+
