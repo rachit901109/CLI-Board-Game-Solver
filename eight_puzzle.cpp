@@ -133,7 +133,7 @@ void write_footer(std::ofstream &dotfile)
 
 void draw_path(const shared_ptr<Node>& root)
 {
-    std::ofstream dotfile("draw_solution.dot");
+    std::ofstream dotfile("eight_puzzle_solution.dot");
     if (!dotfile) {
         std::cerr << "Error opening DOT file." <<endl;
         return ;
@@ -145,8 +145,8 @@ void draw_path(const shared_ptr<Node>& root)
     write_footer(dotfile);
     dotfile.close();
 
-    system("dot -Tsvg draw_solution.dot -o solution.svg");
-    cout<<"SVG file saved in current directory";
+    system("dot -Tsvg eight_puzzle_solution.dot -o 8puzzle_solution.svg");
+    cout<<"SVG file saved in current directory"<<endl;
     return;
 }
 
