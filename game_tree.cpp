@@ -232,11 +232,11 @@ return;
 int main()
 {
     int initial[MAX][MAX] ={{1,2,3},
-                            {4,5,6},
-                            {7,8,0}};
+                            {4,0,6},
+                            {7,8,5}};
 
-    shared_ptr<TreeNode> root = newnode(initial,2,2,2,2,0);
-    make_tree(root,5);
+    shared_ptr<TreeNode> root = newnode(initial,1,1,1,1,0);
+    make_tree(root,6);
     // write_tree(root);
     draw_tree(root);
     return 0;
