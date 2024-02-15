@@ -1,12 +1,7 @@
-#include<iostream>
-#include<fstream>
+#include"eight_puzzle_utils.h"
 #include<cstdlib>
 #include<memory>
-#include<cstring>
-#define MAX 3
 using namespace std;
-
-
 
 struct TreeNode
 {
@@ -17,7 +12,6 @@ struct TreeNode
     shared_ptr<TreeNode> top;
     shared_ptr<TreeNode> bottom;
 };
-
 
 shared_ptr<TreeNode> newnode(int mat[MAX][MAX],int x,int y,int nx,int ny,int depth)
 {
@@ -34,43 +28,6 @@ shared_ptr<TreeNode> newnode(int mat[MAX][MAX],int x,int y,int nx,int ny,int dep
     t->top = NULL;
     t->bottom = NULL;
     return t;
-}
-
-
-string get_string(int mat[MAX][MAX])
-{
-    string re = "";
-    for (int i = 0; i < MAX; i++)
-    {
-        for (int j = 0; j < MAX; j++)
-        {
-            re+=to_string(mat[i][j]);
-        }
-    }
-    return re;
-}
-
-string get_label(int mat[MAX][MAX])
-{
-    string re = "";
-    for (int i = 0; i < MAX; i++)
-    {
-        for (int j = 0; j < MAX; j++)
-        {
-            re+=to_string(mat[i][j]);
-        }
-    re+="\n";
-    }
-    return re;
-}
-
-bool is_valid_move(int movex,int movey)
-{
-    if(movex<0 || movex>=MAX || movey<0 || movey>=MAX)
-    {
-        return false;
-    }
-    return true;
 }
 
 void expand_left(shared_ptr<TreeNode>& root)
@@ -113,7 +70,6 @@ void expand_bottom(shared_ptr<TreeNode>& root)
 return;
 }
 
-
 void make_tree(shared_ptr<TreeNode>& root, int depth_limit)
 {
     if(root == NULL || root->depth == depth_limit)
@@ -129,19 +85,6 @@ void make_tree(shared_ptr<TreeNode>& root, int depth_limit)
     return;
 }
 
-void print_mat(int mat[][MAX])
-{
-    for (int i = 0; i < MAX; i++)
-    {
-        for (int j = 0; j < MAX; j++)
-        {
-            cout<<mat[i][j]<<" ";
-        }
-    cout<<endl;
-    }
-return;
-}
-
 void write_tree(shared_ptr<TreeNode>& root)
 {
     if(root == NULL)
@@ -154,13 +97,6 @@ void write_tree(shared_ptr<TreeNode>& root)
     write_tree(root->top);
     write_tree(root->bottom);
     return;
-}
-
-void write_header(std::ofstream &dotfile)
-{
-    dotfile << "digraph tree{" <<endl;
-    dotfile << "node [shape=circle];"<<endl;
-return;
 }
 
 void add_nodes(std::ofstream &dotfile, const shared_ptr<TreeNode>& root)
@@ -205,12 +141,6 @@ void add_edges(std::ofstream &dotfile, const shared_ptr<TreeNode>& root)
 return;
 }
 
-void write_footer(std::ofstream &dotfile)
-{
-    dotfile << "}" <<endl;
-return;
-}
-
 void draw_tree(const shared_ptr<TreeNode>& root)
 {
     std::ofstream dotfile("tree.dot");
@@ -232,10 +162,10 @@ return;
 int main()
 {
     int initial[MAX][MAX] ={{1,2,3},
-                            {4,0,6},
-                            {7,8,5}};
+                            {4,5,6},
+                            {7,8,0}};
 
-    shared_ptr<TreeNode> root = newnode(initial,1,1,1,1,0);
+    shared_ptr<TreeNode> root = newnode(initial,2,2,2,2,0);
     make_tree(root,6);
     // write_tree(root);
     draw_tree(root);

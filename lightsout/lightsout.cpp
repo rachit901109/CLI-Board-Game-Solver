@@ -1,49 +1,11 @@
-#include<iostream>
-#include<fstream>
+#include"lights_out_utils.h"
 #include<vector>
 #include<algorithm>
 #include<cstdlib>
 using namespace std;
-#define MAX 4
 
 // all true values
 bool final[MAX][MAX] = {{true, true, true, true}, {true, true, true, true}, {true, true, true, true}, {true, true, true, true}};
-int cordx[] = {-1,0,1,0};
-int cordy[] = {0,-1,0,1};
-
-void print_mat(bool mat[][MAX])
-{
-    for (int i = 0; i < MAX; i++)
-    {
-        for (int j = 0; j < MAX; j++)
-        {
-            cout<<mat[i][j]<<" ";
-        }
-    cout<<endl;
-    }
-}
-
-bool is_valid(int i, int j)
-{
-    return i>=0 && i<MAX && j>=0 && j<MAX;
-}
-
-void toggle(bool mat[][MAX], int i, int j)
-{
-    if(is_valid(i, j))
-    {
-        mat[i][j] = !mat[i][j];
-    }
-    for (int k = 0; k < 4; k++)
-    {
-        int x = i+cordx[k];
-        int y = j+cordy[k];
-        if(is_valid(x, y))
-        {
-            mat[x][y] = !mat[x][y];
-        }
-    }
-}
 
 bool reached_final(bool mat[][MAX])
 {
@@ -58,40 +20,6 @@ bool reached_final(bool mat[][MAX])
         }
     }
     return true;
-}
-
-string get_string(bool mat[][MAX])
-{
-    string re = "";
-    for (int i = 0; i < MAX; i++)
-    {
-        for (int j = 0; j < MAX; j++)
-        {
-            re+=to_string(mat[i][j]);
-        }
-    }
-    return re;
-}
-
-string get_label(bool mat[][MAX])
-{
-    string re = "";
-    for (int i = 0; i < MAX; i++)
-    {
-        for (int j = 0; j < MAX; j++)
-        {
-            re+=to_string(mat[i][j]);
-        }
-    re+="\n";
-    }
-    return re;
-}
-
-void write_header(std::ofstream &dotfile)
-{
-    dotfile << "digraph tree{" <<endl;
-    dotfile << "node [shape=circle];"<<endl;
-    return;
 }
 
 void add_nodes(std::ofstream &dotfile, bool initial[][MAX], vector<vector<int>>& all_moves, int solution_index)
@@ -120,12 +48,6 @@ void add_edges(std::ofstream &dotfile, bool initial[][MAX], vector<vector<int>>&
     }
 }
 
-void write_footer(std::ofstream &dotfile)
-{
-    dotfile << "}" <<endl;
-    return;
-}
-
 void draw(vector<vector<int>>& all_moves, bool initial[][MAX], int solution_index)
 {
     std::ofstream dotfile("lightsout_solution.dot");
@@ -147,11 +69,11 @@ void draw(vector<vector<int>>& all_moves, bool initial[][MAX], int solution_inde
 int main()
 {
     // initial state
-    bool initial[MAX][MAX] = {{false, false, false, false}, {false, true, true, true}, {true, false, true, false}, {false, true, true, true}};
+    bool initial[MAX][MAX] = {{false, true, true, true}, {false, false, false, true}, {false, true, false, true}, {false, false, false, false}};
     cout<<"Initial state: "<<endl;
     print_mat(initial);
 
-    // all possible moves for 3x3 grid ie all subsequences vector cells
+    // all possible moves for MAX x MAX grid ie all subsequences vector cells
     vector<int> cells;
     for (int i = 0; i < MAX*MAX; i++)
     {

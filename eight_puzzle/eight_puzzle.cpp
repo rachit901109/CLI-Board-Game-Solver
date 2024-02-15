@@ -1,12 +1,9 @@
-#include<iostream>
+#include"eight_puzzle_utils.h"
 #include<queue>
 #include<vector>
-#include<fstream>
 #include<cstdlib>
 #include<memory>
-#include<cstring>
 using namespace std;
-#define MAX 3
 
 // Solvability: - https://intellipaat.com/community/6144/8-puzzle-solvability-and-shortest-solution
 
@@ -59,54 +56,6 @@ int cost(int mat[MAX][MAX])
     return s;
 }
 
-void print_mat(int mat[][MAX])
-{
-    for (int i = 0; i < MAX; i++)
-    {
-        for (int j = 0; j < MAX; j++)
-        {
-            cout<<mat[i][j]<<" ";
-        }
-    cout<<endl;
-    }
-}
-
-
-string get_string(int mat[MAX][MAX])
-{
-    string re = "";
-    for (int i = 0; i < MAX; i++)
-    {
-        for (int j = 0; j < MAX; j++)
-        {
-            re+=to_string(mat[i][j]);
-        }
-    }
-    return re;
-    
-}
-
-string get_label(int mat[MAX][MAX])
-{
-    string re = "";
-    for (int i = 0; i < MAX; i++)
-    {
-        for (int j = 0; j < MAX; j++)
-        {
-            re+=to_string(mat[i][j]);
-        }
-    re+="\n";
-    }
-    return re;
-}
-
-void write_header(std::ofstream &dotfile)
-{
-    dotfile << "digraph path{" <<endl;
-    dotfile << "node [shape=circle];"<<endl;
-    return;
-}
-
 void add_nodes(std::ofstream &dotfile, const shared_ptr<Node>& root)
 {
     if(root == NULL)
@@ -124,13 +73,6 @@ void add_edges(std::ofstream &dotfile, const shared_ptr<Node>& root)
     dotfile << get_string(temp->mat)+" -> "+get_string(root->mat)<<endl;
 }
 
-
-void write_footer(std::ofstream &dotfile)
-{
-    dotfile << "}" <<endl;
-    return;
-}
-
 void draw_path(const shared_ptr<Node>& root)
 {
     std::ofstream dotfile("eight_puzzle_solution.dot");
@@ -145,20 +87,9 @@ void draw_path(const shared_ptr<Node>& root)
     write_footer(dotfile);
     dotfile.close();
 
-    system("dot -Tsvg eight_puzzle_solution.dot -o 8puzzle_solution.svg");
+    system("dot -Tsvg eight_puzzle_solution.dot -o eight_puzzle_solution.svg");
     cout<<"SVG file saved in current directory"<<endl;
     return;
-}
-
-
-
-bool is_valid_move(int movex,int movey)
-{
-    if(movex<0 || movex>=MAX || movey<0 || movey>=MAX)
-    {
-        return false;
-    }
-    return true;
 }
 
 struct cmp
@@ -220,7 +151,6 @@ int count_inversion(int initial[MAX][MAX])
     }
     return ic;
 }
-
 
 int main()
 {
